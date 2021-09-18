@@ -1,6 +1,10 @@
 import React from "react";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
+import Header from "../components/Header";
+import styled from "styled-components";
+import Loader from "../components/Loader";
+import Movie from "../components/Movie";
 
 const GET_MOVIES = gql`
     {
@@ -12,17 +16,23 @@ const GET_MOVIES = gql`
     }
 `;
 
+const Container = styled.div`
+    width: 100%;
+`;
+
 const Home = () => {
     const { loading, error, data } = useQuery(GET_MOVIES);
     console.log(data);
-    return (
-        <div>
-            {loading ? (
-                <h1>loading...</h1>
-            ) : (
-                data.movies.map((movie) => <h1>{movie.title}</h1>)
-            )}
-        </div>
+    return loading ? (
+        <Loader />
+    ) : (
+        <Container>
+            <Header />
+            {data.movies &&
+                data.movies.map((movie, index) => (
+                    <Movie key={index} {...movie} />
+                ))}
+        </Container>
     );
 };
 

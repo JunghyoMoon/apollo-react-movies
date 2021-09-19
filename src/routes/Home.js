@@ -1,8 +1,8 @@
 import React from "react";
+import styled from "styled-components";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import Header from "../components/Header";
-import styled from "styled-components";
 import Loader from "../components/Loader";
 import Movie from "../components/Movie";
 

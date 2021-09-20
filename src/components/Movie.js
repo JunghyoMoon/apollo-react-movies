@@ -2,21 +2,68 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const Container = styled.div``;
+const Container = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 
-const Title = styled.h1``;
+const Wrapper = styled(Link)`
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
 
-const SubTitle = styled.h2``;
+    &:hover {
+        * {
+            opacity: 0.6;
+        }
+    }
 
-const Image = styled.img``;
+    &:active {
+    }
+`;
 
-const Movie = ({ id, title, medium_cover_image }) => (
+const InfoContainer = styled.div`
+    margin-left: 20px;
+`;
+
+const Title = styled.h1`
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+`;
+
+const Rating = styled.h2`
+    font-size: 25px;
+    margin-bottom: 20px;
+`;
+
+const Summary = styled.span`
+    font-size: 20px;
+`;
+
+const Image = styled.img`
+    border-radius: 7px;
+`;
+
+const Movie = ({ id, title, rating, summary, medium_cover_image }) => (
     <Container>
-        <Link to={`/${id}`}>
-            <Title>{title}</Title>
-            <SubTitle>{id}</SubTitle>
-            <Image src={medium_cover_image} alt={title} />
-        </Link>
+        <Wrapper to={`/${id}`}>
+            <Image src={medium_cover_image} alt={title}></Image>
+            <InfoContainer>
+                <Title>{title}</Title>
+                <Rating>★ {rating}</Rating>
+                <Summary>
+                    {summary.length >= 120
+                        ? `${summary.slice(0, 120)}...`
+                        : summary}
+                </Summary>
+            </InfoContainer>
+        </Wrapper>
     </Container>
 );
 

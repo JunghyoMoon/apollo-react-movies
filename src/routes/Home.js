@@ -16,6 +16,7 @@ const GET_MOVIES = gql`
             rating
             summary
             medium_cover_image
+            isLiked @client
         }
     }
 `;

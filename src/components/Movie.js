@@ -50,7 +50,7 @@ const Image = styled.img`
     border-radius: 7px;
 `;
 
-const Movie = ({ id, title, rating, summary, medium_cover_image }) => (
+const Movie = ({ id, title, rating, summary, medium_cover_image, isLiked }) => (
     <Container>
         <Wrapper to={`/${id}`}>
             <Image src={medium_cover_image} alt={title}></Image>
@@ -64,6 +64,7 @@ const Movie = ({ id, title, rating, summary, medium_cover_image }) => (
                 </Summary>
             </InfoContainer>
         </Wrapper>
+        <button>{isLiked ? "unlike" : "like"}</button>
     </Container>
 );
 

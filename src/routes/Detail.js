@@ -16,6 +16,11 @@ const GET_MOVIE = gql`
             description_intro
             large_cover_image
         }
+
+        suggestions(id: $id) {
+            title
+            medium_cover_image
+        }
     }
 `;
 
@@ -42,6 +47,22 @@ const Informations = styled.div`
     align-items: flex-start;
 `;
 
+const Suggestions = styled.div`
+    width: 100%;
+    display: flex;
+    overflow: scroll;
+
+    img {
+        width: 120px;
+        border-radius: 5px;
+        margin-right: 5px;
+
+        &:last-child {
+            margin-right: 0px;
+        }
+    }
+`;
+
 const Title = styled.h1`
     font-size: 50px;
     font-weight: 500;
@@ -55,7 +76,8 @@ const Rating = styled.h2`
 `;
 
 const Desc = styled.p`
-    font-size: 20px;
+    font-size: 15px;
+    margin-bottom: 30px;
 `;
 
 const Detail = () => {
@@ -65,6 +87,7 @@ const Detail = () => {
             id: parseInt(id),
         },
     });
+    console.log(data);
     return loading ? (
         <Loader />
     ) : (
@@ -79,6 +102,11 @@ const Detail = () => {
                     ★ {data.movie.rating} / {data.movie.language}
                 </Rating>
                 <Desc>{data.movie.description_intro}</Desc>
+                <Suggestions>
+                    {data?.suggestions.map((s) => (
+                        <img src={s.medium_cover_image} alt={s.title}></img>
+                    ))}
+                </Suggestions>
             </Informations>
         </Container>
     );

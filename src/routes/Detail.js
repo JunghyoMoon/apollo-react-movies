@@ -10,22 +10,52 @@ import Loader from "../components/Loader";
 const GET_MOVIE = gql`
     query getMovie($id: Int!) {
         movie(id: $id) {
-            id
             title
             rating
+            language
             description_intro
-            medium_cover_image
+            large_cover_image
         }
     }
 `;
 
 const Container = styled.div`
     width: 100%;
+    height: 100vh;
     background-image: linear-gradient(to right, #f76c4f, #d853a6);
     color: white;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+`;
+
+const Image = styled.img`
+    width: 30%;
+    border-radius: 7px;
+`;
+
+const Informations = styled.div`
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+`;
+
+const Title = styled.h1`
+    font-size: 50px;
+    font-weight: 500;
+    margin-bottom: 50px;
+`;
+
+const Rating = styled.h2`
+    font-size: 25px;
+    font-weight: 400;
+    margin-bottom: 50px;
+`;
+
+const Desc = styled.p`
+    font-size: 20px;
 `;
 
 const Detail = () => {
@@ -35,8 +65,23 @@ const Detail = () => {
             id: parseInt(id),
         },
     });
-    console.log(loading, data);
-    return loading ? <Loader /> : <Container>{data.movie.title}</Container>;
+    return loading ? (
+        <Loader />
+    ) : (
+        <Container>
+            <Image
+                src={data.movie.large_cover_image}
+                alt={data.movie.title}
+            ></Image>
+            <Informations>
+                <Title>{data.movie.title}</Title>
+                <Rating>
+                    ★ {data.movie.rating} / {data.movie.language}
+                </Rating>
+                <Desc>{data.movie.description_intro}</Desc>
+            </Informations>
+        </Container>
+    );
 };
 
 export default Detail;

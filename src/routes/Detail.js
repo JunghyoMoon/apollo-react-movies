@@ -10,11 +10,13 @@ import Loader from "../components/Loader";
 const GET_MOVIE = gql`
     query getMovie($id: Int!) {
         movie(id: $id) {
+            id
             title
             rating
             language
             description_intro
             large_cover_image
+            isLiked @client
         }
 
         suggestions(id: $id) {
@@ -82,12 +84,11 @@ const Desc = styled.p`
 
 const Detail = () => {
     const { id } = useParams();
-    const { loading, error, data } = useQuery(GET_MOVIE, {
+    const { loading, data } = useQuery(GET_MOVIE, {
         variables: {
             id: parseInt(id),
         },
     });
-    console.log(data);
     return loading ? (
         <Loader />
     ) : (
@@ -97,14 +98,20 @@ const Detail = () => {
                 alt={data.movie.title}
             ></Image>
             <Informations>
-                <Title>{data.movie.title}</Title>
+                <Title>
+                    {data.movie.title} {data.movie.isLiked ? "😍" : ""}
+                </Title>
                 <Rating>
                     ★ {data.movie.rating} / {data.movie.language}
                 </Rating>
                 <Desc>{data.movie.description_intro}</Desc>
                 <Suggestions>
-                    {data?.suggestions.map((s) => (
-                        <img src={s.medium_cover_image} alt={s.title}></img>
+                    {data?.suggestions.map((s, index) => (
+                        <img
+                            key={index}
+                            src={s.medium_cover_image}
+                            alt={s.title}
+                        ></img>
                     ))}
                 </Suggestions>
             </Informations>

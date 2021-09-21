@@ -30,8 +30,7 @@ const Container = styled.div`
 `;
 
 const Home = () => {
-    const { loading, error, data } = useQuery(GET_MOVIES);
-    console.log(data);
+    const { loading, data } = useQuery(GET_MOVIES);
     return loading ? (
         <Loader />
     ) : (
